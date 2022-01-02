@@ -6,6 +6,7 @@ public class InputHandler : MonoBehaviour
 {
     public CircleController circleController;
     //public PlayerShooting playerShooting;
+    private Vector3 worldPosition;
 
     //Queue untuk menyimpan list command
     Queue<Command> commands = new Queue<Command>();
@@ -24,7 +25,8 @@ public class InputHandler : MonoBehaviour
 
     void Update()
     {
-        
+        worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        InputShootHandling();
     }
 
     Command InputMovementHandling()
@@ -68,16 +70,19 @@ public class InputHandler : MonoBehaviour
         return null;
     }
 
-    /*Command InputShootHandling()
+    Command InputShootHandling()
     {
         //Jika menembak trigger shoot command
         if (Input.GetButtonDown("Fire1"))
         {
-            return new ShootCommand(playerShooting);
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = Camera.main.nearClipPlane;
+            gameObject.transform.position = worldPosition;
+            return new ShootCommand(circleController,worldPosition.x, worldPosition.y);
         }
         else
         {
             return null;
         }
-    }*/
+    }
 }

@@ -23,6 +23,8 @@ public class CircleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+        //gameObject.transform.position = worldPosition;
         transform.Translate(direction * force, Space.World);
     }
 
@@ -37,5 +39,10 @@ public class CircleController : MonoBehaviour
     public void Move(float _h, float _v)
     {
         direction = new Vector2(_h, _v);
+    }
+
+    public void MoveMouse(float _h, float _v)
+    {
+        gameObject.transform.position = new Vector3(_h, _v, 0);
     }
 }
