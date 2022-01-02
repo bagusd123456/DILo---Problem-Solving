@@ -7,6 +7,9 @@ public class CircleController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 direction;
 
+    private float _h;
+    private float _v;
+
     [SerializeField]
     public float force = 15;
     // Start is called before the first frame update
@@ -29,5 +32,10 @@ public class CircleController : MonoBehaviour
         Vector2 ballLocation = transform.position;
         var inNormal = (ballLocation - contactPoint).normalized;
         direction = Vector2.Reflect(direction, inNormal);
+    }
+
+    public void Move(float _h, float _v)
+    {
+        direction = new Vector2(_h, _v);
     }
 }
