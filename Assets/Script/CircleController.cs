@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CircleController : MonoBehaviour
 {
+    Spawner spawner;
     private Rigidbody2D rb;
     private Vector2 direction;
 
@@ -28,14 +29,6 @@ public class CircleController : MonoBehaviour
         transform.Translate(direction * force, Space.World);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        var contactPoint = collision.contacts[0].point;
-        Vector2 ballLocation = transform.position;
-        var inNormal = (ballLocation - contactPoint).normalized;
-        direction = Vector2.Reflect(direction, inNormal);
-    }
-
     public void Move(float _h, float _v)
     {
         direction = new Vector2(_h, _v);
@@ -44,5 +37,22 @@ public class CircleController : MonoBehaviour
     public void MoveMouse(float _h, float _v)
     {
         gameObject.transform.position = new Vector3(_h, _v, 0);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var contactPoint = collision.contacts[0].point;
+        Vector2 ballLocation = transform.position;
+        var inNormal = (ballLocation - contactPoint).normalized;
+        direction = Vector2.Reflect(direction, inNormal);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("CubePrefab"))
+        {
+            SkorController.score++;
+            Destroy(collision.gameObject);
+        }
     }
 }
