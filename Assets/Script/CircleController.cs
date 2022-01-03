@@ -10,7 +10,10 @@ public class CircleController : MonoBehaviour
 
     private float _h;
     private float _v;
+    [SerializeField]
+    private float timeClone;
 
+    public GameObject spawnerGameObject;
     [SerializeField]
     public float force = 15;
     // Start is called before the first frame update
@@ -19,6 +22,7 @@ public class CircleController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         //direction = new Vector2(15f, 5f);
         direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        spawner = spawnerGameObject.GetComponent<Spawner>();
     }
 
     // Update is called once per frame
@@ -53,6 +57,12 @@ public class CircleController : MonoBehaviour
         {
             SkorController.score++;
             Destroy(collision.gameObject);
+            timeClone = Time.time + 2f;
+            if (timeClone >= Time.time)
+            {
+                spawner.SpawnBoxRandom();
+                timeClone = 0f;
+            }
         }
     }
 }
